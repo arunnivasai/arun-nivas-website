@@ -1,0 +1,358 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   GLOBALS.CSS — Arun Nivas Portfolio
+   Design System Foundation
+
+   Responsibilities:
+   1. Google Fonts import
+   2. Tailwind directives
+   3. CSS custom properties (design tokens as CSS variables)
+   4. Base element resets beyond Tailwind preflight
+   5. Utility classes: gradient text, gradient border, section padding,
+      form fields, animation helpers
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Note on fonts ──────────────────────────────────────────────────── */
+/*
+   Fonts (DM Sans, Syne, JetBrains Mono) are loaded via next/font/google
+   in app/layout.tsx. This is Next.js's recommended approach — it provides
+   automatic self-hosting, preloading, and zero layout shift.
+   No @import needed here.
+*/
+
+/* ── 2. Tailwind directives ────────────────────────────────────────────── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── 3. CSS Custom Properties ──────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --indigo:         #4F46E5;
+  --indigo-light:   #6366F1;
+  --indigo-pale:    #818CF8;
+  --violet:         #7C3AED;
+  --violet-light:   #A78BFA;
+  --indigo-50:      #EEF2FF;
+  --indigo-100:     #E0E7FF;
+
+  /* Slate */
+  --slate-300:  #CBD5E1;
+  --slate-400:  #94A3B8;
+  --slate-500:  #64748B;
+  --slate-600:  #475569;
+  --slate-700:  #334155;
+  --slate-800:  #1E293B;
+  --slate-900:  #0F172A;
+  --slate-950:  #020617;
+
+  /* Semantic */
+  --emerald:    #10B981;
+  --amber:      #F59E0B;
+  --cyan:       #0891B2;
+  --rose:       #F43F5E;
+
+  /* Surface */
+  --white:      #FFFFFF;
+  --off-white:  #FAFAFA;
+  --gray-50:    #F9FAFB;
+  --gray-100:   #F3F4F6;
+  --gray-400:   #9CA3AF;
+  --gray-500:   #6B7280;
+  --border:     #E8EAED;
+  --border-dark: rgba(255,255,255,0.08);
+
+  /* Gradients */
+  --grad-main:   linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  --grad-text:   linear-gradient(135deg, #818CF8 0%, #A78BFA 60%);
+  --grad-border: linear-gradient(135deg, #4F46E5, #7C3AED);
+  --grad-cta:    linear-gradient(135deg, #4F46E5 0%, #5B21B6 100%);
+  --grad-amber:  linear-gradient(135deg, #F59E0B, #FCD34D);
+
+  /* Shadows */
+  --shadow-sm:    0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:    0 4px 16px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:    0 16px 48px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-glow:  0 0 40px rgba(79,70,229,0.15);
+  --shadow-glow-sm: 0 0 24px rgba(79,70,229,0.12);
+  --shadow-glow-lg: 0 0 60px rgba(79,70,229,0.22);
+
+  /* Radius */
+  --radius:      14px;
+  --radius-lg:   20px;
+  --radius-full: 9999px;
+}
+
+/* ── 4. Base resets ────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  background-color: #FAFAFA;
+  color: #0D0D12;
+  line-height: 1.6;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+nav ul,
+nav ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Keyframes for hero entry animations ───────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── 5. Utility layer ──────────────────────────────────────────────────── */
+@layer utilities {
+
+  /* Gradient text — indigo→violet brand gradient on text */
+  .grad-text {
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .grad-text-amber {
+    background: var(--grad-amber);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .grad-text-white {
+    background: linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.75) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /*
+    Gradient border card — dark variant.
+    The inner bg color must be set via style or a wrapper class.
+    Usage: <div className="grad-border-card" style={{'--card-bg': '#0F172A'}}>
+  */
+  .grad-border-card {
+    background:
+      linear-gradient(var(--card-bg, #0F172A), var(--card-bg, #0F172A)) padding-box,
+      var(--grad-border) border-box;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius);
+  }
+
+  /* Gradient border card — light variant */
+  .grad-border-card-white {
+    background:
+      linear-gradient(white, white) padding-box,
+      var(--grad-border) border-box;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius);
+  }
+
+  /* Section vertical padding — clamp-based fluid scale */
+  .section-py {
+    padding-top:    clamp(72px, 9vw, 116px);
+    padding-bottom: clamp(72px, 9vw, 116px);
+  }
+  .section-py-sm {
+    padding-top:    clamp(48px, 6vw, 72px);
+    padding-bottom: clamp(48px, 6vw, 72px);
+  }
+  .section-py-lg {
+    padding-top:    clamp(80px, 10vw, 128px);
+    padding-bottom: clamp(80px, 10vw, 128px);
+  }
+  .section-py-xl {
+    padding-top:    clamp(96px, 12vw, 160px);
+    padding-bottom: clamp(96px, 12vw, 160px);
+  }
+
+  /* Section horizontal padding */
+  .section-px {
+    padding-left:  clamp(20px, 5vw, 48px);
+    padding-right: clamp(20px, 5vw, 48px);
+  }
+
+  /* Combined section padding */
+  .section-p {
+    padding-top:    clamp(72px, 9vw, 116px);
+    padding-bottom: clamp(72px, 9vw, 116px);
+    padding-left:   clamp(20px, 5vw, 48px);
+    padding-right:  clamp(20px, 5vw, 48px);
+  }
+  .section-p-sm {
+    padding-top:    clamp(48px, 6vw, 72px);
+    padding-bottom: clamp(48px, 6vw, 72px);
+    padding-left:   clamp(20px, 5vw, 48px);
+    padding-right:  clamp(20px, 5vw, 48px);
+  }
+  .section-p-lg {
+    padding-top:    clamp(80px, 10vw, 128px);
+    padding-bottom: clamp(80px, 10vw, 128px);
+    padding-left:   clamp(20px, 5vw, 48px);
+    padding-right:  clamp(20px, 5vw, 48px);
+  }
+
+  .section-p-xl {
+    padding-top:    clamp(96px, 12vw, 160px);
+    padding-bottom: clamp(96px, 12vw, 160px);
+    padding-left:   clamp(20px, 5vw, 48px);
+    padding-right:  clamp(20px, 5vw, 48px);
+  }
+
+  /* Hero inner padding */
+  .hero-py {
+    padding-top:    clamp(56px, 7vw, 96px);
+    padding-bottom: clamp(56px, 7vw, 80px);
+  }
+
+  /* Fluid heading sizes — mirrors clamp() values from HTML files */
+  .text-hero   { font-size: clamp(48px, 8vw,   96px); line-height: 1.04; letter-spacing: -0.025em; }
+  .text-display{ font-size: clamp(40px, 6.5vw, 78px); line-height: 1.06; letter-spacing: -0.025em; }
+  .text-h1     { font-size: clamp(36px, 5.5vw, 68px); line-height: 1.08; letter-spacing: -0.02em; }
+  .text-h2     { font-size: clamp(26px, 4vw,   44px); line-height: 1.10; letter-spacing: -0.015em; }
+  .text-h2-lg  { font-size: clamp(28px, 4vw,   48px); line-height: 1.10; letter-spacing: -0.015em; }
+  .text-h3     { font-size: clamp(20px, 2.5vw, 28px); line-height: 1.20; letter-spacing: -0.01em; }
+
+  /* Fluid body copy */
+  .text-body-lg { font-size: clamp(16px, 2vw, 18.5px); line-height: 1.72; }
+  .text-body    { font-size: clamp(15px, 1.8vw, 17px);  line-height: 1.70; }
+
+  /* Form field base — overrides browser defaults consistently */
+  .form-field {
+    width: 100%;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 15px;
+    color: var(--slate-900);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .form-field::placeholder { color: var(--gray-400); }
+  .form-field:focus {
+    border-color: var(--indigo);
+    box-shadow: 0 0 0 3px rgba(79,70,229,0.10);
+  }
+
+  /* Dark page scrollbar (WebKit) */
+  .scrollbar-dark::-webkit-scrollbar        { width: 5px; }
+  .scrollbar-dark::-webkit-scrollbar-track  { background: var(--slate-900); }
+  .scrollbar-dark::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.12); border-radius: 3px; }
+  .scrollbar-dark::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+  /* Animation delay helpers for staggered CSS animations */
+  .anim-delay-100 { animation-delay: 100ms; }
+  .anim-delay-200 { animation-delay: 200ms; }
+  .anim-delay-300 { animation-delay: 300ms; }
+  .anim-delay-400 { animation-delay: 400ms; }
+  .anim-delay-500 { animation-delay: 500ms; }
+  .anim-delay-600 { animation-delay: 600ms; }
+  .anim-delay-700 { animation-delay: 700ms; }
+
+  /* Hero CSS-animated elements — fade up on load */
+  .hero-anim {
+    opacity: 0;
+    animation-name: fadeUp;
+    animation-duration: 0.7s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: forwards;
+  }
+
+  /* Background grid pattern helper */
+  .bg-grid {
+    background-size: 52px 52px;
+  }
+
+}
+
+/* ── 6. Component layer ────────────────────────────────────────────────── */
+@layer components {
+
+  /* Section label — the monospace eyebrow above headings */
+  .section-label {
+    @apply inline-block font-mono text-[11px] font-semibold tracking-[0.14em]
+           uppercase text-[#4F46E5] bg-[#EEF2FF] border border-[#E0E7FF]
+           px-3 py-1 rounded-full mb-[18px];
+  }
+  .section-label-dark {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--indigo-pale);
+    background: rgba(79,70,229,0.12);
+    border: 1px solid rgba(79,70,229,0.20);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    margin-bottom: 18px;
+  }
+
+  /* Navbar link variants */
+  .nav-link {
+    @apply text-sm font-medium px-3 py-1.5 rounded-lg transition-colors duration-200;
+  }
+  .nav-link-light {
+    @apply nav-link text-[#64748B] hover:text-[#0D0D12] hover:bg-gray-100;
+  }
+  .nav-link-dark {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-link-dark:hover {
+    color: white;
+    background: rgba(255,255,255,0.06);
+  }
+
+}
